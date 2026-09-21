@@ -1,0 +1,7 @@
+{
+  "name": "Cloudbase",
+  "slug": "cloudebase",
+  "description": "用于结合腾讯云开发构建全栈应用的技能集。该技能使你的编码智能体深入了解云开发的 API、认证模式、数据库操作、云函数等更多内容。",
+  "version": "2.20.3"
+}
+
