@@ -4,12 +4,12 @@ export const site = {
   title: 'Bigkun · 博客与作品集',
   slogan: '记录思考，展示作品，长期主义地写好每一行代码。',
   description: 'Bigkun 的个人博客与作品集 — 技术笔记、项目复盘与生活随想。',
-  email: 'Bigkun233@users.noreply.github.com',
-  location: '中国',
+  email: '1553151283@qq.com',
+  location: '中国 · 青岛',
   // 社交链接
   socials: [
     { label: 'GitHub', url: 'https://github.com/Bigkun233', icon: 'github' },
-    { label: '邮箱', url: 'mailto:Bigkun233@users.noreply.github.com', icon: 'mail' },
+    { label: '邮箱', url: 'mailto:1553151283@qq.com', icon: 'mail' },
   ],
   nav: [
     { label: '首页', path: '/' },
