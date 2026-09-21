@@ -12,10 +12,10 @@ function NavItem({ to, label, onClick }: { to: string; label: string; onClick?: 
       onClick={onClick}
       end={to === '/'}
       className={({ isActive }) =>
-        `rounded-lg px-3 py-2 text-sm font-medium transition ${
+        `link-underline py-1 text-[0.93rem] transition-colors ${
           isActive
-            ? 'bg-brand-50 text-brand-600 dark:bg-slate-800 dark:text-brand-500'
-            : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white'
+            ? 'text-brand-600 dark:text-brand-400 [text-decoration-color:currentColor]'
+            : 'text-ink-soft hover:text-ink dark:text-night-soft dark:hover:text-night-ink'
         }`
       }
     >
@@ -28,36 +28,38 @@ export function Layout() {
   const [open, setOpen] = useState(false)
   const { pathname } = useLocation()
 
-  // 路由切换时回到顶部（外部系统同步）
   useEffect(() => {
     window.scrollTo({ top: 0 })
   }, [pathname])
 
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/80 backdrop-blur dark:border-slate-800 dark:bg-slate-950/80">
-        <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-4">
-          <Link to="/" className="flex items-center gap-2 text-lg font-bold text-slate-900 dark:text-white">
-            <span className="grid h-8 w-8 place-items-center rounded-lg bg-brand-600 text-sm text-white">叶</span>
-            {site.name}
+      <header className="sticky top-0 z-40 border-b border-line bg-paper/85 backdrop-blur-md dark:border-night-line dark:bg-night/85">
+        <div className="mx-auto flex h-16 max-w-3xl items-center justify-between px-5">
+          <Link to="/" className="group flex items-baseline gap-2">
+            <span className="font-display text-xl font-semibold text-ink dark:text-night-ink">
+              {site.name}
+            </span>
+            <span className="hidden text-xs tracking-wide text-ink-faint sm:inline dark:text-night-soft">
+              {site.tagline}
+            </span>
           </Link>
 
-          <nav className="hidden items-center gap-1 md:flex">
+          <nav className="hidden items-center gap-6 md:flex">
             {site.nav.map((item) => (
               <NavItem key={item.path} to={item.path} label={item.label} />
             ))}
-            <div className="ml-2">
-              <ThemeToggle />
-            </div>
+            <span className="h-4 w-px bg-line dark:bg-night-line" />
+            <ThemeToggle />
           </nav>
 
-          <div className="flex items-center gap-2 md:hidden">
+          <div className="flex items-center gap-1 md:hidden">
             <ThemeToggle />
             <button
               type="button"
               onClick={() => setOpen((v) => !v)}
               aria-label="打开菜单"
-              className="grid h-9 w-9 place-items-center rounded-lg border border-slate-200 text-lg text-slate-600 dark:border-slate-700 dark:text-slate-300"
+              className="grid h-9 w-9 place-items-center text-xl text-ink-soft dark:text-night-soft"
             >
               <Icon name={open ? 'close' : 'menu'} />
             </button>
@@ -65,8 +67,8 @@ export function Layout() {
         </div>
 
         {open && (
-          <nav className="border-t border-slate-200 bg-white px-4 py-2 md:hidden dark:border-slate-800 dark:bg-slate-950">
-            <div className="flex flex-col gap-1 py-2">
+          <nav className="border-t border-line bg-paper px-5 py-3 md:hidden dark:border-night-line dark:bg-night">
+            <div className="flex flex-col gap-3">
               {site.nav.map((item) => (
                 <NavItem key={item.path} to={item.path} label={item.label} onClick={() => setOpen(false)} />
               ))}
@@ -75,25 +77,27 @@ export function Layout() {
         )}
       </header>
 
-      <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-10">
+      <main className="mx-auto w-full max-w-3xl flex-1 px-5 pb-20 pt-14">
         <Outlet />
       </main>
 
-      <footer className="border-t border-slate-200 py-8 dark:border-slate-800">
-        <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 px-4 text-sm text-slate-500 sm:flex-row dark:text-slate-400">
-          <p>
-            © {new Date().getFullYear()} {site.name} · {site.location}
+      <footer className="border-t border-line dark:border-night-line">
+        <div className="mx-auto flex max-w-3xl flex-col gap-3 px-5 py-8 text-sm text-ink-soft sm:flex-row sm:items-center sm:justify-between dark:text-night-soft">
+          <p className="font-display">
+            © {new Date().getFullYear()} {site.name}
+            <span className="ml-2 font-sans text-xs text-ink-faint dark:text-night-soft">
+              {site.location}
+            </span>
           </p>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-5">
             {site.socials.map((s) => (
               <a
                 key={s.label}
                 href={s.url}
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center gap-1.5 transition hover:text-brand-600 dark:hover:text-brand-500"
+                className="link-underline transition-colors hover:text-brand-600 dark:hover:text-brand-400"
               >
-                <Icon name={s.icon} className="text-base" />
                 {s.label}
               </a>
             ))}

@@ -4,7 +4,6 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import rehypeHighlight from 'rehype-highlight'
 import { getPostBySlug, getPostMetas } from '../lib/posts'
-import { Icon } from '../components/Icon'
 
 export function PostDetail() {
   const { slug } = useParams<{ slug: string }>()
@@ -12,15 +11,14 @@ export function PostDetail() {
 
   if (!post) {
     return (
-      <div className="py-20 text-center">
-        <p className="text-5xl">🔍</p>
-        <h1 className="mt-4 text-2xl font-bold text-slate-900 dark:text-white">文章不存在</h1>
-        <p className="mt-2 text-slate-600 dark:text-slate-400">链接可能已失效，或者文章被删除了。</p>
+      <div className="py-24">
+        <h1 className="font-display text-2xl text-ink dark:text-night-ink">文章不存在</h1>
+        <p className="mt-3 text-ink-soft dark:text-night-soft">链接可能已失效，或者文章被删除了。</p>
         <Link
           to="/blog"
-          className="mt-6 inline-flex items-center gap-2 rounded-lg bg-brand-600 px-4 py-2 text-sm text-white transition hover:bg-brand-700"
+          className="link-underline mt-6 inline-block text-sm text-brand-600 dark:text-brand-400"
         >
-          <Icon name="arrowLeft" /> 返回博客列表
+          ← 返回文章列表
         </Link>
       </div>
     )
@@ -34,31 +32,22 @@ export function PostDetail() {
     <article className="mx-auto max-w-3xl">
       <Link
         to="/blog"
-        className="mb-6 inline-flex items-center gap-2 text-sm text-slate-600 transition hover:text-brand-600 dark:text-slate-400 dark:hover:text-brand-500"
+        className="link-underline text-sm text-ink-faint transition-colors hover:text-brand-600 dark:text-night-soft dark:hover:text-brand-400"
       >
-        <Icon name="arrowLeft" /> 返回博客列表
+        ← 文章
       </Link>
 
-      <header className="mb-8 border-b border-slate-200 pb-6 dark:border-slate-800">
-        <h1 className="text-3xl font-bold leading-tight text-slate-900 sm:text-4xl dark:text-white">{post.title}</h1>
-        <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-slate-500 dark:text-slate-400">
-          <span className="flex items-center gap-1">
-            <Icon name="calendar" /> {post.date}
-          </span>
-          <span className="flex items-center gap-1">
-            <Icon name="clock" /> {post.readingMinutes} 分钟阅读
-          </span>
-          <div className="flex flex-wrap gap-1.5">
-            {post.tags.map((tag) => (
-              <span
-                key={tag}
-                className="rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-600 dark:bg-slate-800 dark:text-slate-300"
-              >
-                #{tag}
-              </span>
-            ))}
-          </div>
-        </div>
+      <header className="mt-8 mb-10">
+        <h1 className="text-[2rem] leading-tight text-ink sm:text-[2.35rem] dark:text-night-ink">
+          {post.title}
+        </h1>
+        <p className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs text-ink-faint dark:text-night-soft">
+          <time>{post.date}</time>
+          <span className="text-line dark:text-night-line">·</span>
+          <span>{post.readingMinutes} 分钟</span>
+          {post.tags.length > 0 && <span className="text-line dark:text-night-line">·</span>}
+          <span>{post.tags.join(' / ')}</span>
+        </p>
       </header>
 
       <div className="prose-custom">
@@ -67,25 +56,23 @@ export function PostDetail() {
         </ReactMarkdown>
       </div>
 
-      <nav className="mt-12 grid gap-4 border-t border-slate-200 pt-8 sm:grid-cols-2 dark:border-slate-800">
+      <nav className="mt-16 grid gap-4 border-t border-line pt-8 sm:grid-cols-2 dark:border-night-line">
         {prev ? (
-          <Link
-            to={`/blog/${prev.slug}`}
-            className="rounded-lg border border-slate-200 p-4 transition hover:border-brand-300 dark:border-slate-800 dark:hover:border-brand-700"
-          >
-            <span className="text-xs text-slate-500 dark:text-slate-400">← 上一篇</span>
-            <p className="mt-1 font-medium text-slate-900 dark:text-white">{prev.title}</p>
+          <Link to={`/blog/${prev.slug}`} className="group">
+            <span className="font-mono text-xs text-ink-faint dark:text-night-soft">← 上一篇</span>
+            <p className="mt-1 font-display text-ink transition-colors group-hover:text-brand-600 dark:text-night-ink dark:group-hover:text-brand-400">
+              {prev.title}
+            </p>
           </Link>
         ) : (
           <span />
         )}
         {next && (
-          <Link
-            to={`/blog/${next.slug}`}
-            className="rounded-lg border border-slate-200 p-4 text-right transition hover:border-brand-300 sm:col-start-2 dark:border-slate-800 dark:hover:border-brand-700"
-          >
-            <span className="text-xs text-slate-500 dark:text-slate-400">下一篇 →</span>
-            <p className="mt-1 font-medium text-slate-900 dark:text-white">{next.title}</p>
+          <Link to={`/blog/${next.slug}`} className="group sm:text-right">
+            <span className="font-mono text-xs text-ink-faint dark:text-night-soft">下一篇 →</span>
+            <p className="mt-1 font-display text-ink transition-colors group-hover:text-brand-600 dark:text-night-ink dark:group-hover:text-brand-400">
+              {next.title}
+            </p>
           </Link>
         )}
       </nav>

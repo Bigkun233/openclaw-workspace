@@ -1,77 +1,281 @@
 /* src/index.css */
 @import 'tailwindcss';
-@import 'highlight.js/styles/github-dark.css';
+/* 代码高亮：浅色用 github 主题，深色由下方 .dark 覆盖为 github-dark */
+@import 'highlight.js/styles/github.css';
 
-/* 用 class 控制深色模式（点击切换 <html class="dark">） */
+/* 用 class 控制深色模式 */
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-sans: 'Inter', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
-  --color-brand-50: #eff6ff;
-  --color-brand-100: #dbeafe;
-  --color-brand-200: #bfdbfe;
-  --color-brand-300: #93c5fd;
-  --color-brand-400: #60a5fa;
-  --color-brand-500: #3b82f6;
-  --color-brand-600: #2563eb;
-  --color-brand-700: #1d4ed8;
-  --color-brand-800: #1e40af;
-  --color-brand-900: #1e3a8a;
+  /* —— 字体 —— */
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', 'Noto Sans SC', system-ui, sans-serif;
+  --font-display: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Songti SC', 'STSong',
+    'Noto Serif SC', 'Source Han Serif SC', serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+
+  /* —— 纸感中性色（暖调）—— */
+  --color-paper: #faf8f5;
+  --color-paper-2: #f3efe7;
+  --color-line: #e8e2d7;
+  --color-ink: #2b2723;
+  --color-ink-soft: #6f675d;
+  --color-ink-faint: #9a938a;
+
+  /* —— 暗色 —— */
+  --color-night: #181512;
+  --color-night-2: #221e19;
+  --color-night-line: #2e2922;
+  --color-night-ink: #ded8cf;
+  --color-night-soft: #9a9186;
+
+  /* —— 主色：赭石 / 铁锈 —— */
+  --color-brand-50: #fdf7f0;
+  --color-brand-100: #f8ebda;
+  --color-brand-200: #f0d4b3;
+  --color-brand-300: #e3b483;
+  --color-brand-400: #d18f4f;
+  --color-brand-500: #b96f2c;
+  --color-brand-600: #9c561f;
+  --color-brand-700: #7d421a;
+  --color-brand-800: #653518;
+  --color-brand-900: #532c16;
 }
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  @apply bg-slate-50 text-slate-800 antialiased dark:bg-slate-950 dark:text-slate-200;
+  background-color: var(--color-paper);
+  color: var(--color-ink);
   font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-/* Markdown 正文样式 */
+.dark body {
+  background-color: var(--color-night);
+  color: var(--color-night-ink);
+}
+
+/* 标题统一走衬线，制造编辑式（杂志）质感 */
+h1,
+h2,
+h3,
+.font-display {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+::selection {
+  background: var(--color-brand-200);
+  color: var(--color-brand-900);
+}
+
+/* 细下划线链接（正文内） */
+.link-underline {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: color-mix(in oklab, currentColor 35%, transparent);
+}
+.link-underline:hover {
+  text-decoration-color: currentColor;
+}
+
+/* ============ Markdown 正文 ============ */
+.prose-custom {
+  font-size: 1.0625rem;
+  line-height: 1.85;
+  color: var(--color-ink);
+}
+.dark .prose-custom {
+  color: var(--color-night-ink);
+}
+.prose-custom > *:first-child {
+  margin-top: 0;
+}
+
 .prose-custom h1 {
-  @apply mt-2 mb-6 text-3xl font-bold text-slate-900 dark:text-white;
+  font-size: 1.9rem;
+  margin: 2.25rem 0 1rem;
 }
 .prose-custom h2 {
-  @apply mt-10 mb-4 border-b border-slate-200 pb-2 text-2xl font-semibold text-slate-900 dark:border-slate-800 dark:text-white;
+  font-size: 1.4rem;
+  margin: 2.5rem 0 0.9rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--color-line);
+}
+.dark .prose-custom h2 {
+  border-color: var(--color-night-line);
 }
 .prose-custom h3 {
-  @apply mt-8 mb-3 text-xl font-semibold text-slate-900 dark:text-white;
+  font-size: 1.15rem;
+  margin: 1.9rem 0 0.6rem;
 }
+
 .prose-custom p {
-  @apply my-4 leading-8 text-slate-700 dark:text-slate-300;
+  margin: 1.15rem 0;
 }
+
 .prose-custom a {
-  @apply text-brand-600 underline decoration-brand-300 underline-offset-2 hover:text-brand-700 dark:text-brand-500;
+  color: var(--color-brand-600);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: color-mix(in oklab, var(--color-brand-500) 45%, transparent);
+}
+.prose-custom a:hover {
+  text-decoration-color: currentColor;
+}
+.dark .prose-custom a {
+  color: var(--color-brand-400);
+}
+
+.prose-custom ul,
+.prose-custom ol {
+  margin: 1.15rem 0;
+  padding-left: 1.35rem;
 }
 .prose-custom ul {
-  @apply my-4 list-disc space-y-2 pl-6 text-slate-700 dark:text-slate-300;
+  list-style: none;
+}
+.prose-custom ul > li {
+  position: relative;
+}
+.prose-custom ul > li::before {
+  content: '';
+  position: absolute;
+  left: -1.1rem;
+  top: 0.78em;
+  width: 5px;
+  height: 1px;
+  background: var(--color-brand-500);
 }
 .prose-custom ol {
-  @apply my-4 list-decimal space-y-2 pl-6 text-slate-700 dark:text-slate-300;
+  list-style: decimal;
 }
+.prose-custom li {
+  margin: 0.4rem 0;
+}
+.prose-custom li::marker {
+  color: var(--color-ink-soft);
+}
+
 .prose-custom blockquote {
-  @apply my-6 border-l-4 border-brand-300 bg-brand-50/60 py-1 pl-4 text-slate-600 italic dark:border-brand-700 dark:bg-slate-900 dark:text-slate-400;
+  margin: 1.75rem 0;
+  padding: 0.15rem 0 0.15rem 1.1rem;
+  border-left: 2px solid var(--color-brand-400);
+  color: var(--color-ink-soft);
+  font-family: var(--font-display);
+  font-style: italic;
 }
+.dark .prose-custom blockquote {
+  color: var(--color-night-soft);
+}
+
 .prose-custom code {
-  @apply rounded bg-slate-100 px-1.5 py-0.5 text-sm text-pink-600 dark:bg-slate-800 dark:text-pink-400;
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: var(--color-paper-2);
+  padding: 0.12em 0.35em;
+  border-radius: 3px;
+}
+.dark .prose-custom code {
+  background: var(--color-night-2);
 }
 .prose-custom pre {
-  @apply my-6 overflow-x-auto rounded-xl p-4 text-sm;
+  margin: 1.6rem 0;
+  padding: 1rem 1.1rem;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-size: 0.85rem;
+  line-height: 1.7;
+  border: 1px solid var(--color-line);
+  background: var(--color-paper-2) !important;
+}
+.dark .prose-custom pre {
+  border-color: var(--color-night-line);
+  background: var(--color-night-2) !important;
 }
 .prose-custom pre code {
-  @apply bg-transparent p-0 text-inherit;
+  background: transparent;
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
 }
+/* 深色代码高亮，覆盖 github.css */
+.dark .prose-custom .hljs {
+  color: #c9d1d9;
+  background: transparent;
+}
+.dark .prose-custom .hljs-comment,
+.dark .prose-custom .hljs-quote {
+  color: #8b949e;
+}
+.dark .prose-custom .hljs-keyword,
+.dark .prose-custom .hljs-selector-tag,
+.dark .prose-custom .hljs-built_in,
+.dark .prose-custom .hljs-name,
+.dark .prose-custom .hljs-tag {
+  color: #ff7b72;
+}
+.dark .prose-custom .hljs-string,
+.dark .prose-custom .hljs-attr,
+.dark .prose-custom .hljs-addition {
+  color: #a5d6ff;
+}
+.dark .prose-custom .hljs-number,
+.dark .prose-custom .hljs-literal {
+  color: #79c0ff;
+}
+.dark .prose-custom .hljs-title,
+.dark .prose-custom .hljs-section,
+.dark .prose-custom .hljs-function .hljs-title {
+  color: #d2a8ff;
+}
+.dark .prose-custom .hljs-variable,
+.dark .prose-custom .hljs-template-variable {
+  color: #ffa657;
+}
+
 .prose-custom img {
-  @apply my-6 rounded-xl;
+  margin: 1.75rem 0;
+  border-radius: 4px;
 }
+
 .prose-custom table {
-  @apply my-6 w-full border-collapse text-sm;
+  margin: 1.75rem 0;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
 }
 .prose-custom th,
 .prose-custom td {
-  @apply border border-slate-200 px-3 py-2 text-left dark:border-slate-800;
+  border-bottom: 1px solid var(--color-line);
+  padding: 0.55rem 0.7rem;
+  text-align: left;
 }
+.prose-custom th {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  color: var(--color-ink-soft);
+  border-bottom-width: 2px;
+}
+.dark .prose-custom th,
+.dark .prose-custom td {
+  border-color: var(--color-night-line);
+}
+
 .prose-custom hr {
-  @apply my-10 border-slate-200 dark:border-slate-800;
+  margin: 2.75rem auto;
+  width: 3rem;
+  border: 0;
+  border-top: 1px solid var(--color-line);
+}
+.dark .prose-custom hr {
+  border-color: var(--color-night-line);
 }

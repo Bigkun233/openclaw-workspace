@@ -16,18 +16,18 @@ export function Projects() {
   return (
     <div>
       <header className="mb-8">
-        <h1 className="text-3xl font-bold text-slate-900 dark:text-white">作品集</h1>
-        <p className="mt-2 text-slate-600 dark:text-slate-400">我做过的项目与正在折腾的东西。</p>
+        <h1 className="text-3xl text-ink dark:text-night-ink">作品</h1>
+        <p className="mt-3 text-ink-soft dark:text-night-soft">做过的东西，和正在折腾的。</p>
       </header>
 
-      <div className="mb-6 flex flex-wrap gap-2">
+      <div className="mb-8 flex flex-wrap items-center gap-x-4 gap-y-2 border-b border-line pb-5 text-sm dark:border-night-line">
         <button
           type="button"
           onClick={() => setActiveTag(null)}
-          className={`rounded-full px-3 py-1 text-sm transition ${
+          className={`transition-colors ${
             activeTag === null
-              ? 'bg-brand-600 text-white'
-              : 'bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300'
+              ? 'text-brand-600 dark:text-brand-400'
+              : 'text-ink-faint hover:text-ink dark:text-night-soft dark:hover:text-night-ink'
           }`}
         >
           全部
@@ -37,10 +37,10 @@ export function Projects() {
             key={tag}
             type="button"
             onClick={() => setActiveTag((t) => (t === tag ? null : tag))}
-            className={`rounded-full px-3 py-1 text-sm transition ${
+            className={`transition-colors ${
               activeTag === tag
-                ? 'bg-brand-600 text-white'
-                : 'bg-slate-100 text-slate-600 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300'
+                ? 'text-brand-600 dark:text-brand-400'
+                : 'text-ink-faint hover:text-ink dark:text-night-soft dark:hover:text-night-ink'
             }`}
           >
             {tag}
@@ -49,11 +49,9 @@ export function Projects() {
       </div>
 
       {filtered.length === 0 ? (
-        <div className="rounded-xl border border-dashed border-slate-300 py-16 text-center text-slate-500 dark:border-slate-700 dark:text-slate-400">
-          该分类下暂无项目
-        </div>
+        <p className="py-16 text-center text-ink-faint dark:text-night-soft">该分类下暂无项目。</p>
       ) : (
-        <div className="grid gap-5 md:grid-cols-2">
+        <div>
           {filtered.map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}
