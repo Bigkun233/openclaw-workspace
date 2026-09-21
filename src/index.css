@@ -1,0 +1,77 @@
+/* src/index.css */
+@import 'tailwindcss';
+@import 'highlight.js/styles/github-dark.css';
+
+/* 用 class 控制深色模式（点击切换 <html class="dark">） */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: 'Inter', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+  --color-brand-50: #eff6ff;
+  --color-brand-100: #dbeafe;
+  --color-brand-200: #bfdbfe;
+  --color-brand-300: #93c5fd;
+  --color-brand-400: #60a5fa;
+  --color-brand-500: #3b82f6;
+  --color-brand-600: #2563eb;
+  --color-brand-700: #1d4ed8;
+  --color-brand-800: #1e40af;
+  --color-brand-900: #1e3a8a;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-slate-50 text-slate-800 antialiased dark:bg-slate-950 dark:text-slate-200;
+  font-family: var(--font-sans);
+}
+
+/* Markdown 正文样式 */
+.prose-custom h1 {
+  @apply mt-2 mb-6 text-3xl font-bold text-slate-900 dark:text-white;
+}
+.prose-custom h2 {
+  @apply mt-10 mb-4 border-b border-slate-200 pb-2 text-2xl font-semibold text-slate-900 dark:border-slate-800 dark:text-white;
+}
+.prose-custom h3 {
+  @apply mt-8 mb-3 text-xl font-semibold text-slate-900 dark:text-white;
+}
+.prose-custom p {
+  @apply my-4 leading-8 text-slate-700 dark:text-slate-300;
+}
+.prose-custom a {
+  @apply text-brand-600 underline decoration-brand-300 underline-offset-2 hover:text-brand-700 dark:text-brand-500;
+}
+.prose-custom ul {
+  @apply my-4 list-disc space-y-2 pl-6 text-slate-700 dark:text-slate-300;
+}
+.prose-custom ol {
+  @apply my-4 list-decimal space-y-2 pl-6 text-slate-700 dark:text-slate-300;
+}
+.prose-custom blockquote {
+  @apply my-6 border-l-4 border-brand-300 bg-brand-50/60 py-1 pl-4 text-slate-600 italic dark:border-brand-700 dark:bg-slate-900 dark:text-slate-400;
+}
+.prose-custom code {
+  @apply rounded bg-slate-100 px-1.5 py-0.5 text-sm text-pink-600 dark:bg-slate-800 dark:text-pink-400;
+}
+.prose-custom pre {
+  @apply my-6 overflow-x-auto rounded-xl p-4 text-sm;
+}
+.prose-custom pre code {
+  @apply bg-transparent p-0 text-inherit;
+}
+.prose-custom img {
+  @apply my-6 rounded-xl;
+}
+.prose-custom table {
+  @apply my-6 w-full border-collapse text-sm;
+}
+.prose-custom th,
+.prose-custom td {
+  @apply border border-slate-200 px-3 py-2 text-left dark:border-slate-800;
+}
+.prose-custom hr {
+  @apply my-10 border-slate-200 dark:border-slate-800;
+}
