@@ -1,5 +1,6 @@
-// src/pages/About.tsx
+// src/pages/About.tsx — GitHub Profile README 风格
 import { site } from '../data/site'
+import { Icon } from '../components/Icon'
 
 const skills = [
   { group: '前端', items: ['React / TypeScript', 'Vue 3', 'Tailwind CSS', 'Vite'] },
@@ -15,76 +16,75 @@ const timeline = [
 
 export function About() {
   return (
-    <div className="mx-auto max-w-3xl">
-      <header className="mb-10">
-        <h1 className="text-3xl text-ink dark:text-night-ink">关于</h1>
-      </header>
+    <div className="space-y-6">
+      <h1 className="text-xl font-semibold">关于</h1>
 
-      <section className="prose-custom mb-14 max-w-none">
-        <p>
-          你好，我是 <strong>{site.name}</strong>，现居 {site.location}。我关注产品的完整生命周期——
-          从需求梳理、界面设计，到前后端实现与部署上线。
-        </p>
-        <p>
-          我相信<strong>「做得出来」比「说得漂亮」更重要</strong>。这个站点本身也是我的一个作品：
-          用 React + Vite 搭建，文章用 Markdown 管理，部署在静态托管上。
-        </p>
-      </section>
+      <div className="gh-box">
+        <div className="gh-box-header">
+          <Icon name="mark" className="text-base text-fg-muted" />
+          README.md
+        </div>
+        <div className="gh-box-body prose-custom">
+          <p>
+            你好，我是 <strong>{site.name}</strong>，现居 {site.location}。我关注产品的完整生命周期——
+            从需求梳理、界面设计，到前后端实现与部署上线。
+          </p>
+          <p>
+            我相信<strong>「做得出来」比「说得漂亮」更重要</strong>。这个站点本身也是我的一个作品：
+            用 React + Vite 搭建，文章用 Markdown 管理，部署在静态托管上。
+          </p>
+        </div>
+      </div>
 
-      <section className="mb-14">
-        <h2 className="mb-6 border-b border-line pb-3 text-lg text-ink dark:border-night-line dark:text-night-ink">
-          技能
-        </h2>
-        <div className="grid gap-x-8 gap-y-6 sm:grid-cols-3">
+      <div className="gh-box">
+        <div className="gh-box-header">技能</div>
+        <div className="gh-box-body grid gap-6 sm:grid-cols-3">
           {skills.map((s) => (
             <div key={s.group}>
-              <h3 className="mb-3 font-mono text-xs uppercase tracking-widest text-brand-600 dark:text-brand-400">
+              <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-fg-muted">
                 {s.group}
               </h3>
-              <ul className="space-y-1.5 text-sm text-ink-soft dark:text-night-soft">
+              <ul className="space-y-1.5 text-sm text-fg-muted">
                 {s.items.map((item) => (
-                  <li key={item}>{item}</li>
+                  <li key={item} className="flex items-center gap-2">
+                    <span className="text-fg-subtle">•</span>
+                    {item}
+                  </li>
                 ))}
               </ul>
             </div>
           ))}
         </div>
-      </section>
+      </div>
 
-      <section className="mb-14">
-        <h2 className="mb-6 border-b border-line pb-3 text-lg text-ink dark:border-night-line dark:text-night-ink">
-          时间线
-        </h2>
-        <ol className="space-y-6">
-          {timeline.map((t) => (
-            <li key={t.year} className="grid gap-1 sm:grid-cols-[5rem_1fr] sm:gap-6">
-              <span className="font-mono text-sm text-ink-faint dark:text-night-soft">{t.year}</span>
-              <span className="text-ink-soft dark:text-night-soft">{t.text}</span>
-            </li>
-          ))}
-        </ol>
-      </section>
+      <div className="gh-box">
+        <div className="gh-box-header">时间线</div>
+        <div className="gh-box-body">
+          <ul className="space-y-4">
+            {timeline.map((t) => (
+              <li key={t.year} className="grid gap-1 sm:grid-cols-[5rem_1fr] sm:gap-4">
+                <span className="font-mono text-sm text-fg-subtle">{t.year}</span>
+                <span className="text-sm text-fg-muted">{t.text}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
 
-      <section>
-        <h2 className="mb-6 border-b border-line pb-3 text-lg text-ink dark:border-night-line dark:text-night-ink">
-          联系
-        </h2>
-        <ul className="space-y-2 text-sm">
+      <div className="gh-box">
+        <div className="gh-box-header">联系</div>
+        <div className="gh-box-body space-y-2 text-sm">
           {site.socials.map((s) => (
-            <li key={s.label} className="flex gap-4">
-              <span className="w-16 shrink-0 text-ink-faint dark:text-night-soft">{s.label}</span>
-              <a
-                href={s.url}
-                target="_blank"
-                rel="noreferrer"
-                className="link-underline text-ink transition-colors hover:text-brand-600 dark:text-night-ink dark:hover:text-brand-400"
-              >
+            <div key={s.label} className="flex items-center gap-3">
+              <Icon name={s.icon} className="text-fg-muted" />
+              <span className="w-14 text-fg-muted">{s.label}</span>
+              <a href={s.url} target="_blank" rel="noreferrer" className="gh-link">
                 {s.url.replace(/^mailto:/, '')}
               </a>
-            </li>
+            </div>
           ))}
-        </ul>
-      </section>
+        </div>
+      </div>
     </div>
   )
 }

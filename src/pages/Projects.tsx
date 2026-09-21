@@ -1,4 +1,4 @@
-// src/pages/Projects.tsx
+// src/pages/Projects.tsx — GitHub 仓库列表风格
 import { useMemo, useState } from 'react'
 import { projects } from '../data/projects'
 import { ProjectCard } from '../components/ProjectCard'
@@ -15,20 +15,15 @@ export function Projects() {
 
   return (
     <div>
-      <header className="mb-8">
-        <h1 className="text-3xl text-ink dark:text-night-ink">作品</h1>
-        <p className="mt-3 text-ink-soft dark:text-night-soft">做过的东西，和正在折腾的。</p>
-      </header>
+      <h1 className="mb-4 text-xl font-semibold">
+        作品 <span className="gh-counter">{projects.length}</span>
+      </h1>
 
-      <div className="mb-8 flex flex-wrap items-center gap-x-4 gap-y-2 border-b border-line pb-5 text-sm dark:border-night-line">
+      <div className="mb-4 flex flex-wrap items-center gap-2 border-b border-bd pb-3">
         <button
           type="button"
           onClick={() => setActiveTag(null)}
-          className={`transition-colors ${
-            activeTag === null
-              ? 'text-brand-600 dark:text-brand-400'
-              : 'text-ink-faint hover:text-ink dark:text-night-soft dark:hover:text-night-ink'
-          }`}
+          className={`gh-label ${activeTag === null ? '!border-accent !bg-accent !text-white' : 'hover:bg-canvas-subtle'}`}
         >
           全部
         </button>
@@ -37,11 +32,7 @@ export function Projects() {
             key={tag}
             type="button"
             onClick={() => setActiveTag((t) => (t === tag ? null : tag))}
-            className={`transition-colors ${
-              activeTag === tag
-                ? 'text-brand-600 dark:text-brand-400'
-                : 'text-ink-faint hover:text-ink dark:text-night-soft dark:hover:text-night-ink'
-            }`}
+            className={`gh-label ${activeTag === tag ? '!border-accent !bg-accent !text-white' : 'hover:bg-canvas-subtle'}`}
           >
             {tag}
           </button>
@@ -49,9 +40,11 @@ export function Projects() {
       </div>
 
       {filtered.length === 0 ? (
-        <p className="py-16 text-center text-ink-faint dark:text-night-soft">该分类下暂无项目。</p>
+        <div className="gh-box">
+          <div className="gh-box-body text-center text-sm text-fg-muted">该分类下暂无项目。</div>
+        </div>
       ) : (
-        <div>
+        <div className="gh-box">
           {filtered.map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}

@@ -1,17 +1,14 @@
-// src/pages/NotFound.tsx
+// src/pages/NotFound.tsx — GitHub 404 风格
 import { Link } from 'react-router-dom'
 
 export function NotFound() {
   return (
-    <div className="py-24">
-      <p className="font-mono text-sm text-ink-faint dark:text-night-soft">404</p>
-      <h1 className="mt-4 text-3xl text-ink dark:text-night-ink">页面走丢了</h1>
-      <p className="mt-3 text-ink-soft dark:text-night-soft">你访问的页面不存在，或者已经被移动。</p>
-      <Link
-        to="/"
-        className="link-underline mt-6 inline-block text-sm text-brand-600 dark:text-brand-400"
-      >
-        ← 回到首页
+    <div className="flex flex-col items-center py-20 text-center">
+      <p className="font-mono text-5xl font-semibold text-fg-subtle">404</p>
+      <h1 className="mt-4 text-xl font-semibold">页面走丢了</h1>
+      <p className="mt-2 text-sm text-fg-muted">你访问的页面不存在，或者已经被移动。</p>
+      <Link to="/" className="gh-btn gh-btn-primary mt-6">
+        回到首页
       </Link>
     </div>
   )
