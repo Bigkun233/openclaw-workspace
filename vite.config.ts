@@ -5,8 +5,8 @@ import { defineConfig } from 'vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  // GitHub Pages 项目页部署在 https://<用户>.github.io/<仓库名>/，必须写成 '/仓库名/'；自定义域名或根路径部署改成 '/'
-  base: '/personal-site/',
+  // 部署到 GitHub Pages 子路径时改成 '/仓库名/'；本地预览、自定义域名或根路径部署保持 '/'
+  base: '/',
   plugins: [react(), tailwindcss()],
   server: {
     // 允许通过反向代理 / 隧道域名（如 *.lhr.life）访问，仅影响本地 dev 预览
