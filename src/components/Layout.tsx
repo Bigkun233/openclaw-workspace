@@ -1,4 +1,4 @@
-// src/components/Layout.tsx — GitHub 风格：深色顶栏 + 内容容器
+// src/components/Layout.tsx — 杂志风外壳（全站统一）
 import { useEffect, useState } from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 import { site } from '../data/site'
@@ -12,10 +12,10 @@ function NavItem({ to, label, onClick }: { to: string; label: string; onClick?: 
       onClick={onClick}
       end={to === '/'}
       className={({ isActive }) =>
-        `rounded-md px-3 py-1.5 text-sm font-semibold transition-colors ${
+        `link-underline py-1 text-[0.93rem] transition-colors ${
           isActive
-            ? 'bg-white/15 text-white'
-            : 'text-white/75 hover:bg-white/10 hover:text-white'
+            ? 'text-brand-600 dark:text-brand-400 [text-decoration-color:currentColor]'
+            : 'text-ink-soft hover:text-ink dark:text-night-soft dark:hover:text-night-ink'
         }`
       }
     >
@@ -34,26 +34,32 @@ export function Layout() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="sticky top-0 z-40 bg-header">
-        <div className="mx-auto flex h-16 max-w-4xl items-center gap-4 px-4">
-          <Link to="/" className="flex items-center gap-2 text-white">
-            <Icon name="mark" className="text-2xl" />
-            <span className="text-base font-semibold">{site.name}</span>
+      <header className="sticky top-0 z-40 border-b border-line bg-paper/85 backdrop-blur-md dark:border-night-line dark:bg-night/85">
+        <div className="mx-auto flex h-16 max-w-3xl items-center justify-between px-5">
+          <Link to="/" className="group flex items-baseline gap-2">
+            <span className="font-display text-xl font-semibold text-ink dark:text-night-ink">
+              {site.name}
+            </span>
+            <span className="hidden text-xs tracking-wide text-ink-faint sm:inline dark:text-night-soft">
+              {site.tagline}
+            </span>
           </Link>
 
-          <nav className="hidden items-center gap-1 md:flex">
+          <nav className="hidden items-center gap-6 md:flex">
             {site.nav.map((item) => (
               <NavItem key={item.path} to={item.path} label={item.label} />
             ))}
+            <span className="h-4 w-px bg-line dark:bg-night-line" />
+            <ThemeToggle />
           </nav>
 
-          <div className="ml-auto flex items-center gap-2">
-            <ThemeToggle variant="header" />
+          <div className="flex items-center gap-1 md:hidden">
+            <ThemeToggle />
             <button
               type="button"
               onClick={() => setOpen((v) => !v)}
               aria-label="打开菜单"
-              className="grid h-9 w-9 place-items-center rounded-md text-xl text-white/75 hover:bg-white/10 hover:text-white md:hidden"
+              className="grid h-9 w-9 place-items-center text-xl text-ink-soft dark:text-night-soft"
             >
               <Icon name={open ? 'close' : 'menu'} />
             </button>
@@ -61,8 +67,8 @@ export function Layout() {
         </div>
 
         {open && (
-          <nav className="border-t border-white/10 px-4 py-2 md:hidden">
-            <div className="flex flex-col gap-1">
+          <nav className="border-t border-line bg-paper px-5 py-3 md:hidden dark:border-night-line dark:bg-night">
+            <div className="flex flex-col gap-3">
               {site.nav.map((item) => (
                 <NavItem key={item.path} to={item.path} label={item.label} onClick={() => setOpen(false)} />
               ))}
@@ -71,18 +77,27 @@ export function Layout() {
         )}
       </header>
 
-      <main className="mx-auto w-full max-w-4xl flex-1 px-4 py-8">
+      <main className="mx-auto w-full max-w-3xl flex-1 px-5 pb-20 pt-14">
         <Outlet />
       </main>
 
-      <footer className="border-t border-bd py-8">
-        <div className="mx-auto flex max-w-4xl flex-col items-center justify-between gap-3 px-4 text-xs text-fg-subtle sm:flex-row">
-          <p>
-            © {new Date().getFullYear()} {site.name} · {site.location}
+      <footer className="border-t border-line dark:border-night-line">
+        <div className="mx-auto flex max-w-3xl flex-col gap-3 px-5 py-8 text-sm text-ink-soft sm:flex-row sm:items-center sm:justify-between dark:text-night-soft">
+          <p className="font-display">
+            © {new Date().getFullYear()} {site.name}
+            <span className="ml-2 font-sans text-xs text-ink-faint dark:text-night-soft">
+              {site.location}
+            </span>
           </p>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-5">
             {site.socials.map((s) => (
-              <a key={s.label} href={s.url} target="_blank" rel="noreferrer" className="gh-link">
+              <a
+                key={s.label}
+                href={s.url}
+                target="_blank"
+                rel="noreferrer"
+                className="link-underline transition-colors hover:text-brand-600 dark:hover:text-brand-400"
+              >
                 {s.label}
               </a>
             ))}

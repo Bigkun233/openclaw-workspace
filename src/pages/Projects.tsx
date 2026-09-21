@@ -1,4 +1,4 @@
-// src/pages/Projects.tsx — GitHub 仓库列表风格
+// src/pages/Projects.tsx — GitHub 风：仓库列表 + 标签筛选
 import { useMemo, useState } from 'react'
 import { projects } from '../data/projects'
 import { ProjectCard } from '../components/ProjectCard'
@@ -14,7 +14,7 @@ export function Projects() {
   const filtered = activeTag ? projects.filter((p) => p.tags.includes(activeTag)) : projects
 
   return (
-    <div>
+    <div className="gh-scope">
       <h1 className="mb-4 text-xl font-semibold">
         作品 <span className="gh-counter">{projects.length}</span>
       </h1>
