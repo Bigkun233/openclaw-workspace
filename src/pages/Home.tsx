@@ -5,6 +5,7 @@ import { projects } from '../data/projects'
 import { getPostMetas } from '../lib/posts'
 import { PostCard } from '../components/PostCard'
 import { ProjectCard } from '../components/ProjectCard'
+import { RandomBanner } from '../components/RandomBanner'
 
 export function Home() {
   const posts = getPostMetas()
@@ -13,6 +14,9 @@ export function Home() {
 
   return (
     <div className="space-y-20">
+      {/* 随机横幅：每次进入 / 刷新换一张 */}
+      <RandomBanner />
+
       {/* 导语（杂志风） */}
       <section>
         <p className="font-mono text-xs uppercase tracking-[0.2em] text-ink-faint dark:text-night-soft">
